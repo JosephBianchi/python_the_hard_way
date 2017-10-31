@@ -9,7 +9,7 @@ class Scene():
 
 class Engine(object):
     def __init__(self, scene_map):
-        self.scene_map = scene_map
+        self.scene_map = scene_map #Map(central_corridor)
     def play(self):
         current_scene = self.scene_map.opening_scene()
         last_scene = self.scene_map.next_scene('finished')
@@ -17,6 +17,7 @@ class Engine(object):
         while current_scene != last_scene:
             next_scene_name = current_scene.enter()
             current_scene = self.scene_map.next_scene(next_scene_name)
+
             current_scene.enter()
 
 class Death(Scene):
@@ -50,7 +51,7 @@ class CentralCorridor(Scene):
         action = input("> ")
 
         if action == "shoot!":
-            print(decent("""
+            print(dedent("""
                     Quick on the draw you yank out your blaster and fire
                     it at the Gothon. His clown costume is flowing and moving around his body,
                     which throws off your aim. Your laser hits his costume but misses him
@@ -98,7 +99,7 @@ class LaserWeaponArmory(Scene):
         guess = input("[keypad]>")
         guesses = 0
 
-        while guess != code and guesses < 10:
+        while guess != code and guesses < 9:
             print("BZZZZZEDD!")
             guesses += 1
             guess = input("[keypad]> ")
@@ -190,8 +191,14 @@ class Map(object):
     def opening_scene(self):
         return self.next_scene(self.start_scene)
 
+
+# create an instance of map -- pass central_corridor arg __ start_scene == central_corridor
+#
 a_map = Map('central_corridor')
 
+# pass pass object with scene as arg to engine
 a_game = Engine(a_map)
 
 a_game.play()
+# opening scene get scene name in dictionary - start scene
+# get finished scene in dict
